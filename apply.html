@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply — Xeliport Early Access</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: #06101e; color: #e2e8f0; font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+
+nav { padding: 1.1rem 2.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; color: #fff; text-decoration: none; }
+.nav-back { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: #4a5f7a; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.15s; }
+.nav-back:hover { color: #4d8ef0; }
+
+.page { flex: 1; display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 57px); }
+
+/* LEFT — context */
+.left { background: #0b1929; padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid rgba(255,255,255,0.05); }
+.left-top { }
+.left-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: #4d8ef0; text-transform: uppercase; margin-bottom: 1.2rem; }
+.left-h { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.4rem, 4vw, 3.8rem); color: #fff; line-height: 0.92; margin-bottom: 1.5rem; }
+.left-h em { font-family: 'Instrument Serif', serif; font-style: italic; color: rgba(255,255,255,0.25); }
+.left-sub { font-size: 14px; color: #8a9ab5; font-weight: 300; line-height: 1.7; max-width: 340px; }
+
+.left-details { display: flex; flex-direction: column; gap: 1.2rem; }
+.detail { display: flex; align-items: center; gap: 1rem; }
+
+.detail-icon { width: 28px; height: 28px; border: 1px solid rgba(77,142,240,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; align-self: flex-start; margin-top: 1px; }
+.detail-icon svg { width: 14px; height: 14px; stroke: #4d8ef0; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.detail-text { font-size: 13px; color: #8a9ab5; font-weight: 300; line-height: 1.5; }
+.detail-text strong { color: #e2e8f0; font-weight: 400; }
+
+/* RIGHT — form */
+.right { background: #06101e; padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; }
+
+.form-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: #4d8ef0; text-transform: uppercase; margin-bottom: 2.5rem; }
+
+.form { display: flex; flex-direction: column; gap: 1.8rem; max-width: 400px; }
+
+.field { display: flex; flex-direction: column; gap: 0.5rem; }
+.field-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: #4a5f7a; text-transform: uppercase; }
+.field-input { background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.7rem 0; font-size: 15px; font-weight: 300; color: #fff; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s; width: 100%; }
+.field-input::placeholder { color: #2d4060; }
+.field-input:focus { border-color: #4d8ef0; }
+
+.field-select { background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.7rem 0; font-size: 15px; font-weight: 300; color: #fff; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s; width: 100%; appearance: none; cursor: pointer; }
+.field-select:focus { border-color: #4d8ef0; }
+.field-select option { background: #0b1929; color: #fff; }
+.field-select.placeholder { color: #2d4060; }
+
+.select-wrap { position: relative; }
+.select-wrap::after { content: '↓'; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: 11px; color: #4a5f7a; pointer-events: none; }
+
+.submit-row { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 0.5rem; }
+.submit-btn { background: #4d8ef0; color: #fff; border: none; padding: 15px 28px; font-size: 14px; font-weight: 500; font-family: 'Inter', sans-serif; border-radius: 4px; cursor: pointer; text-align: center; transition: opacity 0.15s; }
+.submit-btn:hover { opacity: 0.9; }
+.submit-note { font-family: 'DM Mono', monospace; font-size: 10px; color: #2d4060; letter-spacing: 0.5px; }
+
+/* CONFIRMATION */
+.confirm { display: none; flex-direction: column; gap: 1.5rem; max-width: 400px; }
+.confirm-icon { width: 48px; height: 48px; border: 1px solid rgba(77,142,240,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.confirm-icon svg { width: 20px; height: 20px; stroke: #4d8ef0; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.confirm-h { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: #fff; line-height: 1; }
+.confirm-sub { font-size: 14px; color: #8a9ab5; font-weight: 300; line-height: 1.7; }
+.confirm-timeline { display: flex; flex-direction: column; gap: 0.8rem; padding: 1.5rem; background: #0b1929; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+.confirm-step { display: flex; align-items: center; gap: 0.8rem; font-size: 13px; color: #8a9ab5; font-weight: 300; }
+.confirm-step-dot { width: 6px; height: 6px; border-radius: 50%; background: #4d8ef0; flex-shrink: 0; }
+.back-link { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1px; color: #4a5f7a; text-decoration: none; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; }
+.back-link:hover { color: #4d8ef0; }
+
+@media (max-width: 768px) {
+  .page { grid-template-columns: 1fr; min-height: auto; }
+  nav { padding: 1rem 1.5rem; }
+  .left { padding: 2.5rem 1.5rem; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); justify-content: flex-start; gap: 2.5rem; }
+  .left-h { font-size: clamp(2rem, 9vw, 2.8rem); }
+  .right { padding: 2.5rem 1.5rem; }
+  .form { max-width: 100%; }
+  .confirm { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">Xeliport</a>
+  <a class="nav-back" href="/">← Back</a>
+</nav>
+
+<div class="page">
+
+  <!-- LEFT -->
+  <div class="left">
+    <div class="left-top">
+      <div class="left-label">Early Access · Pilot Cohort</div>
+      <div class="left-h">The right brands.<br>The right market.<br><em>The right time.</em></div>
+      <p class="left-sub">We're onboarding a small pilot cohort — and we're reviewing every application carefully. We're looking for brands with proven India volume, a category that travels well to UAE, and founders who are genuinely ready to move.</p>
+    </div>
+
+    <div class="left-details">
+      <div class="detail">
+        <div class="detail-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="detail-text"><strong>5 business days.</strong> We review every application and get back to you within a week.</div>
+      </div>
+      <div class="detail">
+        <div class="detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="detail-text"><strong>No commitments.</strong> Applying doesn't lock you in to anything.</div>
+      </div>
+      <div class="detail">
+        <div class="detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+        </div>
+        <div class="detail-text"><strong>Limited spots.</strong> Pilot cohort is capped. First qualified, first in.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <div class="form-label">Your application</div>
+
+    <div class="form" id="form">
+      <div class="field">
+        <div class="field-label">Brand name</div>
+        <input class="field-input" type="text" placeholder="Your brand" id="brand" />
+      </div>
+      <div class="field">
+        <div class="field-label">Phone number</div>
+        <input class="field-input" type="tel" placeholder="+91 98765 43210" id="phone" />
+      </div>
+      <div class="field">
+        <div class="field-label">Work email</div>
+        <input class="field-input" type="email" placeholder="you@brand.com" id="email" />
+      </div>
+      <div class="field">
+        <div class="field-label">Monthly order volume in India</div>
+        <div class="select-wrap">
+          <select class="field-select placeholder" id="volume" onchange="this.classList.remove('placeholder')">
+            <option value="" disabled selected>Select range</option>
+            <option value="under500">Under 500 orders/month</option>
+            <option value="500to2000">500 – 2,000 orders/month</option>
+            <option value="2000to5000">2,000 – 5,000 orders/month</option>
+            <option value="5000plus">5,000+ orders/month</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Category</div>
+        <div class="select-wrap">
+          <select class="field-select placeholder" id="category" onchange="this.classList.remove('placeholder')">
+            <option value="" disabled selected>What do you sell?</option>
+            <option>Fashion & Apparel</option>
+            <option>Beauty & Wellness</option>
+            <option>Home & Living</option>
+            <option>Lifestyle & Accessories</option>
+            <option>Food & Supplements</option>
+            <option>Electronics</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="submit-row">
+        <button class="submit-btn" onclick="submitApply()">Submit Application →</button>
+        <div class="submit-note">No spam · No commitments · We'll be in touch</div>
+      </div>
+    </div>
+
+    <div class="confirm" id="confirm">
+      <div class="confirm-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div class="confirm-h">Application received.</div>
+      <div class="confirm-sub">We review applications personally. Here's what happens next:</div>
+      <div class="confirm-timeline">
+        <div class="confirm-step"><span class="confirm-step-dot"></span>We review your application within 5 business days</div>
+        <div class="confirm-step"><span class="confirm-step-dot"></span>If it's a fit, we'll reach out to schedule a call</div>
+        <div class="confirm-step"><span class="confirm-step-dot"></span>Onboarding to UAE go-live in 30 days</div>
+      </div>
+      <a class="back-link" href="/">← Back to Xeliport</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+async function submitApply() {
+  const brand = document.getElementById('brand').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const volume = document.getElementById('volume').value;
+  const category = document.getElementById('category').value;
+  if (!brand || !email || !phone || !volume || !category) {
+    alert('Please fill in all fields.');
+    return;
+  }
+  const btn = document.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  const data = new FormData();
+  data.append('Brand', brand);
+  data.append('Email', email);
+  data.append('Phone', phone);
+  data.append('Monthly volume', volume);
+  data.append('Category', category);
+  data.append('_subject', 'New Xeliport early access application');
+  data.append('_captcha', 'false');
+  data.append('_template', 'table');
+
+  try {
+    const res = await fetch('https://formsubmit.co/ajax/pranitha.alugubelly@gmail.com', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      document.getElementById('form').style.display = 'none';
+      document.getElementById('confirm').style.display = 'flex';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Submit Application →';
+      alert('Something went wrong. Please try again or email pranitha.alugubelly@gmail.com');
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Submit Application →';
+    alert('Network error. Please try again.');
+  }
+}
+</script>
+</body>
+</html>

@@ -176,6 +176,10 @@ section { padding: 5rem 2.5rem; }
 .cta-input { flex: 1; padding: 14px 16px; font-size: 14px; border: none; outline: none; font-family: 'Inter', sans-serif; color: #fff; background: transparent; }
 .cta-input::placeholder { color: rgba(255,255,255,0.4); }
 .cta-submit { padding: 14px 22px; background: #fff; color: #4d8ef0; border: none; cursor: pointer; font-size: 13px; font-weight: 600; font-family: 'Inter', sans-serif; white-space: nowrap; }
+.cta-link { display: inline-flex; align-items: center; gap: 10px; padding: 18px 36px; background: #fff; color: #4d8ef0; text-decoration: none; font-size: 15px; font-weight: 700; font-family: 'Inter', sans-serif; letter-spacing: 0.3px; border-radius: 6px; box-shadow: 0 6px 24px rgba(0,0,0,0.2); transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s; }
+.cta-link:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.3); }
+.cta-link .arrow { display: inline-block; transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1); }
+.cta-link:hover .arrow { transform: translateX(5px); }
 .cta-note { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 10px; letter-spacing: 0.5px; }
 
 footer { background: #030a13; padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
@@ -233,7 +237,7 @@ footer { background: #030a13; padding: 1.5rem 2.5rem; display: flex; justify-con
 
 <nav>
   <div class="logo">Xeliport</div>
-  <button class="nav-btn" onclick="document.querySelector('.cta').scrollIntoView({behavior:'smooth'})">Apply for Early Access</button>
+  <button class="nav-btn" onclick="location.href='/apply'">Apply for Early Access</button>
 </nav>
 
 <!-- 1. HERO -->
@@ -251,7 +255,7 @@ footer { background: #030a13; padding: 1.5rem 2.5rem; display: flex; justify-con
       <div class="pilot-tag"><span class="pilot-dot"></span>Currently onboarding select pilot brands</div>
     </div>
     <div class="hero-right">
-      <button class="hero-btn" onclick="document.querySelector('.cta').scrollIntoView({behavior:'smooth'})">Apply for Early Access <span class="arrow">→</span></button>
+      <button class="hero-btn" onclick="location.href='/apply'">Apply for Early Access <span class="arrow">→</span></button>
       <div class="hero-flags">🇮🇳 BLR &nbsp;·&nbsp; 🇦🇪 DXB</div>
     </div>
   </div>
@@ -418,14 +422,8 @@ footer { background: #030a13; padding: 1.5rem 2.5rem; display: flex; justify-con
 <section class="cta">
   <div class="cta-h">Be first<br>to <em>expand.</em></div>
   <div class="cta-sub">We're onboarding a select cohort of pilot brands. No commitments — just first in line when we go live.</div>
-  <form class="cta-form" id="ctaForm" action="https://formsubmit.co/pranitha.alugubelly@gmail.com" method="POST">
-    <input class="cta-input" name="email" placeholder="your@brand.com" type="email" required />
-    <button class="cta-submit" type="submit">Apply for Early Access →</button>
-    <input type="hidden" name="_subject" value="New Xeliport early access signup">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_template" value="table">
-  </form>
-  <div class="cta-note">Select pilot cohort · No commitments · Early access</div>
+  <a href="/apply" class="cta-link">Apply for Early Access <span class="arrow">→</span></a>
+  <div class="cta-note" style="margin-top:1.5rem;">Select pilot cohort · No commitments · Early access</div>
 </section>
 
 <footer>
@@ -440,7 +438,7 @@ footer { background: #030a13; padding: 1.5rem 2.5rem; display: flex; justify-con
     <span class="sticky-cta-msg">Pilot cohort onboarding now — <em>be first when we go live.</em></span>
   </div>
   <div class="sticky-cta-actions">
-    <button class="sticky-cta-btn" onclick="document.querySelector('.cta').scrollIntoView({behavior:'smooth'})">Apply for Early Access <span class="arrow">→</span></button>
+    <button class="sticky-cta-btn" onclick="location.href='/apply'">Apply for Early Access <span class="arrow">→</span></button>
     <button class="sticky-cta-close" id="stickyCtaClose" aria-label="Dismiss">×</button>
   </div>
 </div>
